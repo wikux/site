@@ -1,26 +1,145 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --wikux-yellow: #ffd428;
+  --wikux-accent: #cda817;
 }
+
+[data-theme="light"] {
+  --background: #faf9f5;
+  --foreground: #1a1a16;
+  --muted: #5c5a50;
+  --border: #e4e0d4;
+  --surface: #ffffff;
+  --atmosphere: color-mix(in srgb, var(--wikux-yellow) 28%, transparent);
+  --atmosphere-deep: color-mix(in srgb, var(--wikux-accent) 12%, transparent);
+}
+
+[data-theme="dim"] {
+  --background: #12110e;
+  --foreground: #f2efe6;
+  --muted: #a8a492;
+  --border: #2e2c26;
+  --surface: #1a1915;
+  --atmosphere: color-mix(in srgb, var(--wikux-yellow) 14%, transparent);
+  --atmosphere-deep: color-mix(in srgb, var(--wikux-accent) 10%, transparent);
+}
+
+@custom-variant dim (&:where([data-theme="dim"] &));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-surface: var(--surface);
+  --color-wikux-yellow: var(--wikux-yellow);
+  --color-wikux-accent: var(--wikux-accent);
+  --font-sans: var(--font-source-sans);
+  --font-display: var(--font-space-grotesk);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-radius: 0;
+}
+
+html {
+  color-scheme: light;
+}
+
+html[data-theme="dim"] {
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
+  background-image:
+    radial-gradient(
+      ellipse 90% 55% at 85% -10%,
+      var(--atmosphere),
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 70% 45% at -5% 30%,
+      var(--atmosphere-deep),
+      transparent 50%
+    );
+  background-attachment: fixed;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-source-sans), ui-sans-serif, sans-serif;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--wikux-yellow) 55%, transparent);
+  color: var(--foreground);
+}
+
+@keyframes hero_mark_in {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fade_up {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate_hero_mark {
+  animation: hero_mark_in 0.9s ease-out both;
+}
+
+.animate_fade_up {
+  animation: fade_up 0.7s ease-out both;
+}
+
+.animate_fade_up_delay {
+  animation: fade_up 0.7s ease-out 0.12s both;
+}
+
+.nav_link {
+  position: relative;
+  text-decoration: none;
+}
+
+.nav_link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.15rem;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+.nav_link:hover::after,
+.nav_link:focus-visible::after,
+.nav_link[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate_hero_mark,
+  .animate_fade_up,
+  .animate_fade_up_delay {
+    animation: none;
+  }
+
+  .nav_link::after {
+    transition: none;
+  }
 }

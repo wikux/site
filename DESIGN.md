@@ -16,3 +16,7 @@ The site should follow branding guidelines:
 Notes:
 
 * Wikux yellow: #FFD428 (accent #CDA817)
+* Automatic light/dim mode, toggleable
+* Sharp edges and calm UI
+* Tailwind
+* Static only
