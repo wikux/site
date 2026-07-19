@@ -108,6 +108,10 @@ body {
   animation: fade_up 0.7s ease-out 0.12s both;
 }
 
+.animate_compare_in {
+  animation: fade_up 0.45s ease-out both;
+}
+
 .prose {
   @apply max-w-[68ch] text-[1.05rem] leading-relaxed text-foreground;
 }
@@ -204,7 +208,8 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .animate_hero_mark,
   .animate_fade_up,
-  .animate_fade_up_delay {
+  .animate_fade_up_delay,
+  .animate_compare_in {
     animation: none;
   }
 

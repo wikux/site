@@ -12,6 +12,8 @@ export function SiteHeader() {
   const pathname = usePathname();
   const guides_current =
     pathname === "/guides" || pathname.startsWith("/guides/");
+  const tools_current =
+    pathname === "/tools" || pathname.startsWith("/tools/");
   const inspiration_current =
     pathname === "/inspiration-wall" ||
     pathname.startsWith("/inspiration-wall/");
@@ -43,6 +45,13 @@ export function SiteHeader() {
             aria-current={guides_current ? "page" : undefined}
           >
             Guides
+          </Link>
+          <Link
+            href="/tools"
+            className="nav_link cursor-pointer text-sm text-muted hover:text-foreground"
+            aria-current={tools_current ? "page" : undefined}
+          >
+            Tools
           </Link>
           <Link
             href="/inspiration-wall"
