@@ -57,7 +57,7 @@ export default async function Home() {
               Wikux is an organization providing free MediaWiki resources. From documentation, extensions, and (soon) CSS snippets and widgets, meant to help independent wikis look and work better.
             </p>
             <p className="mt-4 text-lg leading-relaxed text-muted">
-              We are a public-benefit organization, not a business. We are a place to share what is possible when wiki tech stays open, and when communities are not locked into platforms like Fandom.
+              Wikux is for the public's benefit, and is not a business.
             </p>
           </div>
         </Container>

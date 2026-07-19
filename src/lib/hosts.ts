@@ -61,7 +61,7 @@ export const host_criteria: HostCriterion[] = [
   },
   {
     id: "maintenance",
-    label: "Hands-off ops",
+    label: "Maintenance",
     description:
       "How little you need to handle yourself for upgrades, backups, spam, and uptime.",
   },
@@ -95,7 +95,7 @@ export const rating_levels: Record<HostRating, number> = {
 export const default_selected_host_ids: HostId[] = [
   "self-host",
   "miraheze",
-  "mywikis",
+  "fandom",
 ];
 
 /** Suggested shortlist for people deciding where to start */
