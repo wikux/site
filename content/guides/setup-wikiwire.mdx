@@ -1,0 +1,178 @@
+---
+title: "Set up WikiWire for Git > MediaWiki sync"
+summary: "Push modules and templates from GitHub and have them land on-wiki automatically."
+---
+
+If you maintain Scribunto modules, templates, or site CSS/JS by hand on-wiki, you already know the pain: copy-paste, forgotten docs subpages, and no real review trail. [WikiWire](https://github.com/obbywiki/wikiwire) is a free GitHub Action from the [Obby Wiki](https://obby.wiki) that treats your Git repo as the source of truth and syncs changed files to MediaWiki via the Action API after each push.
+
+Official docs live at [wikiwire.readthedocs.io](https://wikiwire.readthedocs.io/en/latest/). WikiWire works well on MediaWiki 1.43 LTS and newer. Older versions may work, but they're not the target. This guide assums you're on 1.43 or later.
+
+# 1. Why bother?
+
+Once it's set up, a normal Git workflow becomes your wiki deploy:
+
+* Edit Lua / wikitext / CSS in a PR
+* Merge to `main`
+* WikiWire uploads only what changed
+
+That alone is enough reason for any wiki with more than a handful of modules. Multi-wiki setups get even more value: one repo can push shared code to every configured site.
+
+You will need a GitHub repository (or another CI host you're willing to wire yourself). If your modules still only exist on-wiki, create a repo and import them first, for example [obbywiki/modules](https://github.com/obbywiki/modules) is a live reference layout.
+
+# 2. Repository layout
+
+WikiWire only looks under these root folders. Anything else is ignored:
+
+* `modules/` = Scribunto modules
+* `templates/` = templates
+* `mediawiki/` = `MediaWiki:` namespace pages (Common.js, Common.css, sitenotice, etc.)
+
+You need at least one of those three present, plus a `wikiwire.toml` at the repo root.
+
+A minimal shape looks like this:
+
+```text
+.
+├─ modules/
+│  └─ mywikidomain.org/
+│     └─ MyModule/
+│        └─ MyModule.module.lua
+├─ templates/
+│  └─ mywikidomain.org/
+│     └─ Infobox/
+│        └─ Infobox.template.wikitext
+├─ mediawiki/
+│  └─ mywikidomain.org/
+│     ├─ Common.js
+│     └─ Common.css
+├─ wikiwire.toml
+└─ .wikiwireignore
+```
+
+Paths map like this:
+
+* Modules: `modules/<host|id>/<name>/...` → `Module:<name>...`
+* Templates: `templates/<host|id>/<name>/...` → `Template:<name>...`
+* MediaWiki: `mediawiki/<host|id>/<page>.<ext>` → `MediaWiki:<page>` (use a directory when the page has subpages)
+
+Prefer the site's `host` from `wikiwire.toml` as the directory name. Using `id` works if `host` is omitted, but `host` is clearer when you have more than one wiki.
+
+A few rules that bite people early:
+
+* Main module file must be named `<Name>.module.lua` (not bare `.lua`).
+* Main template file must be `<Name>.template.wikitext`.
+* Docs usually live as `doc.wikitext` next to the main file → `Module:Name/doc` or `Template:Name/doc`.
+* Any path segment starting with `_` is skipped (handy for drafts: `_draft`, `_legacy`).
+* `shared/` syncs to every site when `shared = true` in config. `common/` is opt-in per site when `common = true`.
+
+# 3. Configure wikiwire.toml
+
+Drop a `wikiwire.toml` at the repository root. A beginner config:
+
+```toml
+# https://github.com/obbywiki/wikiwire
+
+version = 1
+shared = false
+
+[[sites]]
+id = "mywiki"
+host = "mywikidomain.org"
+api = "https://mywikidomain.org/w/api.php"
+default_branch = "main"
+css_content_model = "css"
+```
+
+Swap in your real host and API URL. Many installs expose the API at `/w/api.php` rather than `/api.php`, open it in a browser and confirm bots can reach it.
+
+Also add a `.wikiwireignore` at the root (even if empty). Patterns follow `.gitignore` semantics. For example, if you keep Luau sources in-repo but only want Lua uploaded:
+
+```text
+**/*.module.luau
+```
+
+Credentials never go in this file. Those live in GitHub Actions secrets.
+
+# 4. Bot account and password
+
+WikiWire edits the wiki as a logged-in user, so you need a bot account.
+
+1. Create a dedicated account (e.g. `WikiWireBot`). Give it the `bot` group; `sysop` can help if you sync protected pages.
+2. Open `Special:BotPasswords` and create a password with at least:
+   * Basic rights
+   * High-volume (bot) access
+   * Edit existing pages
+   * Edit protected pages
+   * Create, edit, and move pages
+3. If you sync `mediawiki/` pages, also enable **Edit the MediaWiki namespace and sitewide/user JSON**.
+4. Allow all IP ranges (`0.0.0.0/0` and `::/0`). GitHub Actions runners rotate IPs constantly.
+
+The username you pass to the Action is `AccountName@BotPasswordName`. Store the generated password as a repository secret named something like `WIKI_PASSWORD`.
+
+# 5. GitHub Actions workflow
+
+Add `.github/workflows/wikiwire.yml`:
+
+```yaml
+name: WikiWire
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "modules/**"
+      - "modules/*"
+      - "templates/**"
+      - "templates/*"
+      - "mediawiki/**"
+      - "mediawiki/*"
+
+jobs:
+  wikiwire:
+    runs-on: ubuntu-latest
+    name: Sync files to production MediaWiki
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: obbywiki/wikiwire@latest
+        with:
+          username: WikiWireBot@BotPasswordNameHere
+          password: ${{ secrets.WIKI_PASSWORD }}
+          # dry_run: true
+```
+
+WikiWire is pre-v1. Pinning `@latest` is fine while exploring; for production, pin a release tag so a breaking change doesn't surprise you mid-deploy.
+
+For multiple wikis with different bots, use the `site_credentials` input (JSON keyed by site `id`) instead of a single global username/password. Details are in the [GitHub README](https://github.com/obbywiki/wikiwire).
+
+# 6. Test before you trust it
+
+Uncomment `dry_run: true` on the first runs. Push a small module or template change and read the Action log: you should see planned titles and content models with no real edits.
+
+When that looks right, turn dry run off and push again. Only files that changed in the commit are synced by default, not the whole tree.
+
+If something fails, error prefixes help narrow it down:
+
+* **WikiWire config error** = `wikiwire.toml` / `.wikiwireignore`
+* **WikiWire API error** = reachability, auth, or Cloudflare blocking bots
+* **WikiWire content model error** = wrong folder or unsupported extension
+
+Cloudflare Bot Fight Mode is a common blocker for the Action API. If login works locally but CI fails, check that first ([docs](https://wikiwire.readthedocs.io/en/latest/bypassing-cloudflare/)).
+
+# 7. Things WikiWire will not do for you
+
+Worth knowing up front:
+
+* Deleting a file in Git does **not** delete the on-wiki page.
+* Renames show up as a delete + add on the Git side; the old wiki page sticks around.
+* `sync_all: override` forces a full tree sync. Useful rarely, dangerous often. Treat it as last resort.
+
+# Next steps
+
+Once the happy path works, dig into shared modules across sites, ignore patterns, and content-model options in the official references:
+
+* [Get started](https://wikiwire.readthedocs.io/en/latest/)
+* [wikiwire.toml reference](https://wikiwire.readthedocs.io/en/latest/wikiwire-toml-reference/)
+* [.wikiwireignore reference](https://wikiwire.readthedocs.io/en/latest/wikiwire-ignore-reference/)
+* Live example repo: [obbywiki/modules](https://github.com/obbywiki/modules)

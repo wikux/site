@@ -94,7 +94,7 @@ export const skins: Skin[] = [
     docs_url: "https://starcitizentools.github.io/mediawiki-skins-Citizen/",
     screenshot: "/skins/citizen.png",
     screenshot_of: "Star Citizen Wiki",
-    best_for: ["Custom branding", "Dark mode", "Independent wikis"],
+    best_for: ["Custom branding", "Dark mode"],
     support: "Updates regularly (outside MW majors)",
     est_default_sites: "12+",
     examples: [
