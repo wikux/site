@@ -7,7 +7,7 @@ import { inspiration_wikis } from "@/lib/inspiration";
 export const metadata: Metadata = {
   title: "Inspiration wall",
   description:
-    "A curated wall of independent MediaWiki sites worth studying — custom skins, layouts, and what is possible outside walled gardens.",
+    "A curated wall of independent MediaWiki sites worth studying; custom skins, layouts, and what is possible outside walled gardens.",
 };
 
 export default function InspirationWallPage() {

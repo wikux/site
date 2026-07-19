@@ -253,7 +253,7 @@ export const skins: Skin[] = [
     id: "timeless",
     name: "Timeless",
     summary:
-      "A responsive WMF skin with a distinct two-column layout — a common alternative when Vector feels too Wikipedia-like.",
+      "A responsive WMF skin with a distinct two-column layout. A common alternative when Vector feels too Wikipedia-like.",
     maintained_by: "Wikimedia Foundation / community",
     repo_url: "https://gerrit.wikimedia.org/g/mediawiki/skins/Timeless",
     docs_url: "https://www.mediawiki.org/wiki/Skin:Timeless",

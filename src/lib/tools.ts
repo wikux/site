@@ -13,6 +13,12 @@ export const tools: ToolSummary[] = [
       "Pick MediaWiki skins side by side and compare them for custom styling, mobile, and admin goals.",
   },
   {
+    slug: "host-compare",
+    title: "Host compare",
+    summary:
+      "Compare wiki farms, managed hosts, and self-hosting on control, cost, ads, and how hard they are to leave.",
+  },
+  {
     slug: "markdown-to-wikitext",
     title: "Markdown to wikitext",
     summary:

@@ -6,7 +6,7 @@ import { tools } from "@/lib/tools";
 export const metadata: Metadata = {
   title: "Tools",
   description:
-    "Open tooling for MediaWiki admins — compare skins, and more to come.",
+    "Open tooling for MediaWiki admins; compare skins and hosts, convert Markdown, and more to come.",
 };
 
 export default function ToolsPage() {
