@@ -74,7 +74,7 @@ export const skin_criteria: SkinCriterion[] = [
   },
 ];
 
-/** Wikux recommendation order for independent wiki admins. */
+/** Wikux recommendation order */
 export const recommended_skin_ids: SkinId[] = [
   "citizen",
   "apex",
