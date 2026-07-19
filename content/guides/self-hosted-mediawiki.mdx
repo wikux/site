@@ -1,0 +1,156 @@
+---
+title: "How to self-host MediaWiki"
+summary: "Start your own MediaWiki instance and get it online with this guide."
+---
+
+Setting up your first MediaWiki instance is relatively accomplishable for most people, especially if you're using a single server like this tutorial assumes, which you most likely are. The first question you should be asking yourself isn't how, but why. Why self-host your own MediaWiki instance over choosing another wiki-farm?
+
+If you don't go with another wiki farm (e.g., Miraheze WikiOasis, etc.), you get all the benefits of controlling your MediaWiki instance, such as:
+
+* Access to enable and config extensions and skins however you please
+    * You can even modify them or create your own, like many wikis have!
+* Complete server-side control
+* Complete permission to change whatever you want however you want
+* No reliance on a wiki-farm and their provider
+* ...and countless other benefits
+
+BUT. Some of these benefits can also be considered as drawbacks; for example:
+
+* You are responsible for ALL content on your wiki.
+* You must write governing terms of use and a privacy policy yourself (if the stock one does not apply).
+* You must solely maintain the server, and are responsible for its up-time.
+
+It's up to you if it's worth it. Typically, independent wikis are where the innovation happens in terms of extensions and skins, as it's far easier to test and deploy new versions when you control the server. The choice is yours.
+
+---
+
+With that out of the way, let's get to the fun part...
+
+## What should your server look like?
+
+For this guide I'll be using a DigitalOcean Droplet, their form of a VPS. At a minimum, I recommend 1GB of RAM and whatever comes with it. Depending on the size of your wiki, you may want to upgrade this later.
+
+* Login or create a [Digital Ocean](https://www.digitalocean.com/?refcode=4bec7a43ac62) account.
+* Navigate to the droplets section. Sometimes you can find 'Create a Droplet' from the home page.
+* Choose a datacenter region, ideally close to you or your users (most people choose the US).
+* Choose Ubuntu as your operating system, for this guide I'll be using Ubuntu 24.04 LTS x64.
+* Based on your budget, a managed database may be diserable down the road, but we'll be skipping that for now, as it adds significant complexity to our setup.
+* Click to create the Droplet. Note that if you sign up using our [referral code](https://www.digitalocean.com/?refcode=4bec7a43ac62) you can get $200 free for the first 60 days.
+
+Configure your SSH keys and connect to the droplet's console. You can also do this via the dashboard if you prefer, but that is often at times laggy.
+
+Once you're in the console you can begin the setup.
+
+---
+
+## Setting up the environment
+
+This guide covers the following stack:
+
+* Docker
+* Stable MediaWiki (fpm)
+* NGINX
+* MariaDB
+
+All of these work nicely together and are heavily used.
+
+### Installing Docker
+
+Let's start by installing Docker itself onto our system. You can check the latest install guide by Docker for Ubuntu [here](https://docs.docker.com/engine/install/ubuntu/), or proceed below:
+
+```bash
+sudo apt update
+sudo apt install ca-certificates curl
+```
+
+```bash
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+```
+
+```bash
+sudo apt update
+```
+
+```bash
+sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+---
+
+Then, check if Docker is running:
+
+```bash
+sudo systemctl status docker
+```
+
+If Docker is not running, start it manually:
+
+```bash
+sudo systemctl start docker
+```
+
+---
+
+### Creating the directory
+
+Let's quickly setup the directory. Here, we're going to put our mounts under `/opt/mywiki`, but you can theoretically choose anywhere.
+
+```bash
+mkdir -p /opt/mywiki
+cd /opt/mywiki
+```
+
+Good start. This is going to be the home of where we store a lot of your wiki's configuration files.
+
+### docker-compose.yml
+
+The very first step to actually getting MediaWiki online with Docker is writing a `docker-compose.yml` file. This file essentially tells Docker what it needs to install and where it should run. Here's a good example of what it should look like:
+
+```yaml
+services:
+  database:
+    image: mariadb:10.11
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: my_wiki
+      MYSQL_USER: wikiuser
+      MYSQL_PASSWORD: wikipassword
+    volumes:
+      - db_data:/var/lib/mysql
+
+  mediawiki:
+    image: mediawiki:latest
+    restart: always
+    depends_on:
+      - database
+    environment:
+      MW_DB_SERVER: database
+      MW_DB_NAME: my_wiki
+      MW_DB_USER: wikiuser
+      MW_DB_PASS: wikipassword
+    volumes:
+      - ./images:/var/www/html/images
+      - ./LocalSettings.php:/var/www/html/LocalSettings.php
+      - ./extensions:/var/www/html/extensions
+      - ./skins:/var/www/html/skins
+  gateway:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - mediawiki
+
+volumes:
+  db_data:
+```
+
+You can change the details, such as the database password, then use `nano docker-compose.yml` to paste it into the file directly.
+
+You can see from the file that we're mounting `LocalSettings.php`, `images`, `extensions`, and `skins`. This is because if we include them directly in the volume we may accidentally overwrite them.
+
+---

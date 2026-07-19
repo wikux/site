@@ -1,9 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/container";
-import { guides } from "@/lib/guides";
+import { get_all_guide_summaries } from "@/lib/guides";
 
-export default function Home() {
+export default async function Home() {
+  const guides = await get_all_guide_summaries();
+
   return (
     <>
       <section className="relative min-h-[calc(100svh-3.5rem)] overflow-hidden border-b border-border/80">
@@ -80,9 +82,9 @@ export default function Home() {
                   className="group flex flex-col gap-1 py-5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-wikux-accent"
                 >
                   <span className="font-display text-lg font-medium text-foreground group-hover:text-wikux-accent">
-                    {guide.title}
+                    {guide.data.title}
                   </span>
-                  <span className="text-muted">{guide.summary}</span>
+                  <span className="text-muted">{guide.data.summary}</span>
                 </Link>
               </li>
             ))}
