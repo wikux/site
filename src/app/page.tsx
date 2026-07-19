@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/container";
+import { ResourceCard } from "@/components/resource_card";
 import { get_all_guide_summaries } from "@/lib/guides";
+import { resources } from "@/lib/resources";
 
 export default async function Home() {
   const guides = await get_all_guide_summaries();
@@ -89,6 +91,37 @@ export default async function Home() {
               </li>
             ))}
           </ul>
+        </Container>
+      </section>
+
+      <section className="border-t border-border/80 py-16 sm:py-20">
+        <Container>
+          <div className="mb-8 max-w-2xl">
+            <h2 className="font-display text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+              Resources
+            </h2>
+            <p className="mt-3 text-lg text-muted">
+              Extensions and related projects for MediaWiki. Not all are from
+              Wikux.
+            </p>
+          </div>
+
+          <ul className="grid gap-6 sm:grid-cols-2">
+            {resources.map((resource) => (
+              <li key={resource.url}>
+                <ResourceCard resource={resource} />
+              </li>
+            ))}
+          </ul>
+
+          <p className="mt-6">
+            <Link
+              href="/resources"
+              className="text-sm font-medium text-foreground underline-offset-4 hover:text-wikux-accent hover:underline"
+            >
+              Browse the resource hub
+            </Link>
+          </p>
         </Container>
       </section>
     </>

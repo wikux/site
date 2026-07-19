@@ -27,6 +27,12 @@ export function SiteFooter() {
             Tools
           </Link>
           <Link
+            href="/resources"
+            className="nav_link w-fit cursor-pointer text-foreground hover:text-wikux-accent"
+          >
+            Resources
+          </Link>
+          <Link
             href="/inspiration-wall"
             className="nav_link w-fit cursor-pointer text-foreground hover:text-wikux-accent"
           >

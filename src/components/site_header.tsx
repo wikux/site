@@ -17,6 +17,8 @@ export function SiteHeader() {
   const inspiration_current =
     pathname === "/inspiration-wall" ||
     pathname.startsWith("/inspiration-wall/");
+  const resources_current =
+    pathname === "/resources" || pathname.startsWith("/resources/");
 
   return (
     <header className="border-b border-border/80 bg-background/80 backdrop-blur-sm">
@@ -52,6 +54,13 @@ export function SiteHeader() {
             aria-current={tools_current ? "page" : undefined}
           >
             Tools
+          </Link>
+          <Link
+            href="/resources"
+            className="nav_link cursor-pointer text-sm text-muted hover:text-foreground"
+            aria-current={resources_current ? "page" : undefined}
+          >
+            Resources
           </Link>
           <Link
             href="/inspiration-wall"
