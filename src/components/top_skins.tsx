@@ -87,7 +87,7 @@ export function TopSkins({
                       "inline-flex shrink-0 items-center gap-2 border px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-wikux-accent",
                       is_selected
                         ? "cursor-default border-border bg-background text-muted"
-                        : "cursor-pointer border-foreground bg-foreground text-background hover:border-wikux-accent hover:bg-wikux-yellow hover:text-foreground",
+                        : "cursor-pointer border-foreground bg-foreground text-background hover:border-wikux-accent hover:bg-wikux-yellow hover:text-on-yellow",
                     ].join(" ")}
                   >
                     {is_selected ? (

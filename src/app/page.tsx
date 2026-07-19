@@ -40,7 +40,7 @@ export default async function Home() {
             <div className="mt-8 animate_fade_up_delay">
               <Link
                 href="/guides"
-                className="inline-flex cursor-pointer border border-foreground bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-colors hover:border-wikux-accent hover:bg-wikux-yellow hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-wikux-accent"
+                className="inline-flex cursor-pointer border border-foreground bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-colors hover:border-wikux-accent hover:bg-wikux-yellow hover:text-on-yellow focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-wikux-accent"
               >
                 Browse guides
               </Link>

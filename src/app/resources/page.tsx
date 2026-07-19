@@ -24,6 +24,14 @@ export default function ResourcesPage() {
           Not all projects listed here are from Wikux. Community and third-party
           work is included when it is useful for independent wikis.
         </p>
+        <a
+          href="https://github.com/wikux/site/pulls"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-6 inline-flex cursor-pointer border border-foreground bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-colors hover:border-wikux-accent hover:bg-wikux-yellow hover:text-on-yellow focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-wikux-accent"
+        >
+          Add your own resource
+        </a>
       </header>
 
       <div className="animate_fade_up_delay flex flex-col gap-14">

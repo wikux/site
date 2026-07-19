@@ -123,7 +123,7 @@ export function MarkdownToWikitext() {
         <button
           type="button"
           onClick={copy_wikitext}
-          className="inline-flex items-center gap-2 border border-foreground bg-foreground px-3 py-2 text-sm font-medium text-background transition-colors hover:bg-wikux-yellow hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-wikux-accent cursor-pointer"
+          className="inline-flex items-center gap-2 border border-foreground bg-foreground px-3 py-2 text-sm font-medium text-background transition-colors hover:bg-wikux-yellow hover:text-on-yellow focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-wikux-accent cursor-pointer"
         >
           {copied ? (
             <Check className="size-3.5" strokeWidth={1.75} aria-hidden="true" />

@@ -467,7 +467,7 @@ export function SkinCompare() {
           <button
             type="button"
             onClick={add_column}
-            className="inline-flex w-fit cursor-pointer items-center gap-2 border border-foreground bg-foreground px-3 py-2 text-sm font-medium text-background transition-colors hover:border-wikux-accent hover:bg-wikux-yellow hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-wikux-accent"
+            className="inline-flex w-fit cursor-pointer items-center gap-2 border border-foreground bg-foreground px-3 py-2 text-sm font-medium text-background transition-colors hover:border-wikux-accent hover:bg-wikux-yellow hover:text-on-yellow focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-wikux-accent"
           >
             <Plus className="size-4" aria-hidden="true" strokeWidth={1.75} />
             Add column

@@ -3,6 +3,8 @@
 :root {
   --wikux-yellow: #ffd428;
   --wikux-accent: #cda817;
+  /* Always dark; used for text on yellow button hovers in both themes. */
+  --on-yellow: #1a1a16;
 }
 
 [data-theme="light"] {
@@ -35,6 +37,7 @@
   --color-surface: var(--surface);
   --color-wikux-yellow: var(--wikux-yellow);
   --color-wikux-accent: var(--wikux-accent);
+  --color-on-yellow: var(--on-yellow);
   --font-sans: var(--font-source-sans);
   --font-display: var(--font-space-grotesk);
 }
