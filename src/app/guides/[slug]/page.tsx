@@ -47,7 +47,7 @@ export default async function GuidePage({ params }: page_props) {
         <span className="text-foreground">{page.frontmatter.title}</span>
       </p>
 
-      <div className="max-w-2xl animate_fade_up_delay">
+      <div className="max-w-3xl animate_fade_up_delay">
         <h1 className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
           {page.frontmatter.title}
         </h1>
