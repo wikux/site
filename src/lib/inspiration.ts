@@ -38,6 +38,12 @@ export const inspiration_wikis: InspirationWiki[] = [
     tags: ["Citizen", "Gaming", "Independent"],
   },
   {
+    name: "100% Orange Juice Wiki",
+    url: "https://orangejuice.wiki/",
+    image: "/insp/orangejuicewiki.png",
+    tags: ["Vector (legacy)", "Gaming", "Independent"],
+  },
+  {
     name: "Outlaster Wiki",
     url: "https://outlaster.miraheze.org/",
     image: "/insp/outlaster.png",
