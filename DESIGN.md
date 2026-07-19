@@ -20,3 +20,4 @@ Notes:
 * Sharp edges and calm UI
 * Tailwind
 * Static only
+* cursor-pointer on all interactive elements, unless another cursor fits more
