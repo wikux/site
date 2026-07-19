@@ -72,7 +72,7 @@ export default async function Home() {
               Guides
             </h2>
             <p className="mt-3 text-lg text-muted">
-              Practical MediaWiki administration, starting with self-hosting.
+              Practical MediaWiki administration guides.
             </p>
           </div>
 
