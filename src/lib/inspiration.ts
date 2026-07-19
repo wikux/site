@@ -74,6 +74,12 @@ export const inspiration_wikis: InspirationWiki[] = [
     tags: ["Vector", "Gaming", "Independent"],
   },
   {
+    name: "Hollow Knight Wiki",
+    url: "https://hollowknight.wiki/",
+    image: "/insp/hollowknightwiki.png",
+    tags: ["Timeless", "Gaming", "Independent"],
+  },
+  {
     name: "Nookipedia",
     url: "https://nookipedia.com/",
     image: "/insp/nookipedia.png",
