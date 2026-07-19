@@ -24,6 +24,7 @@ This is **bold**, *italic*, and \`inline code\`.
 
 1. Numbered one
 2. Numbered two
+3. Numbered three
 
 ## Code
 
@@ -36,8 +37,10 @@ def hello():
 
 | Skin | Mobile |
 | --- | --- |
+| Cosmos | Sure |
 | Vector | Good |
 | Minerva | Excellent |
+| Citizen | Excellent+ |
 
 > A short quote.
 `;
@@ -192,7 +195,7 @@ export function MarkdownToWikitext() {
             <h2 className="font-display text-sm font-medium text-foreground">
               Wikitext
             </h2>
-            <span className="text-xs text-muted">MediaWiki source</span>
+            <span className="text-xs text-muted">used by MediaWiki</span>
           </div>
           <textarea
             value={wikitext}
