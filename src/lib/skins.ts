@@ -91,7 +91,7 @@ export const skins: Skin[] = [
       "A popular skin originally developed for the Star Citizen Wiki. Focusing on mobile and responsive design.",
     maintained_by: "Community (Star Citizen Wiki / contributors)",
     repo_url: "https://github.com/StarCitizenTools/mediawiki-skins-Citizen",
-    docs_url: "https://www.mediawiki.org/wiki/Skin:Citizen",
+    docs_url: "https://starcitizentools.github.io/mediawiki-skins-Citizen/",
     screenshot: "/skins/citizen.png",
     screenshot_of: "Star Citizen Wiki",
     best_for: ["Custom branding", "Dark mode", "Independent wikis"],

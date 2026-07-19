@@ -18,7 +18,7 @@ const source_sans = Source_Sans_3({
 export const metadata: Metadata = {
   title: {
     default: "Wikux",
-    template: "%s · Wikux",
+    template: "%s — Wikux",
   },
   description:
     "A collection of resources to make MediaWiki wikis great.",
