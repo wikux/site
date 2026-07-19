@@ -20,10 +20,28 @@ export const inspiration_wikis: InspirationWiki[] = [
     tags: ["Vector", "Gaming", "Independent"],
   },
   {
+    name: "Stella Sora Wiki",
+    url: "https://stellasora.miraheze.org/",
+    image: "/insp/stellasora.png",
+    tags: ["Citizen", "Gaming", "Miraheze"],
+  },
+  {
     name: "Item Asylum Wiki",
     url: "https://itemasylum.wiki/",
     image: "/insp/item-asylum.png",
     tags: ["Citizen", "Roblox", "Miraheze"],
+  },
+  {
+    name: "Tolkien Gateway Wiki",
+    url: "https://tolkiengateway.net/",
+    image: "/insp/tolkiengateway.png",
+    tags: ["Citizen", "Gaming", "Independent"],
+  },
+  {
+    name: "Outlaster Wiki",
+    url: "https://outlaster.miraheze.org/",
+    image: "/insp/outlaster.png",
+    tags: ["Citizen", "Gaming", "Miraheze"],
   },
   {
     name: "Runescape Wiki",
