@@ -1,7 +1,7 @@
 export type ResourceKind =
-  | "MediaWiki extension"
-  | "Browser extension"
-  | "CI tooling";
+  | "mw_ext"
+  | "browser_ext"
+  | "ci_tooling";
 
 export type Resource = {
   name: string;
@@ -17,11 +17,11 @@ export type Resource = {
 /** Curated MediaWiki-related projects; not all are Wikux-owned. */
 export const resources: Resource[] = [
   {
-    name: "TrendingArticles",
+    name: "TrendingArticles [BETA]",
     summary:
       "Experimental MediaWiki extension that shows trending or recently popular articles per category, with a modern Citizen-oriented path and a simpler HitCounters fallback.",
     url: "https://github.com/wikux/mediawiki-extensions-TrendingArticles",
-    kind: "MediaWiki extension",
+    kind: "mw_ext",
     by: "Wikux",
     from_wikux: true,
   },
@@ -30,7 +30,7 @@ export const resources: Resource[] = [
     summary:
       "MediaWiki extension that lets Scribunto modules set and extend per-page JSON-LD for rich results and structured data.",
     url: "https://www.mediawiki.org/wiki/Extension:DynamicJsonLD",
-    kind: "MediaWiki extension",
+    kind: "mw_ext",
     by: "Obby Wiki",
     from_wikux: false,
   },
@@ -39,7 +39,7 @@ export const resources: Resource[] = [
     summary:
       "GitHub Action that syncs modules, templates, and other files from a Git repo into a live MediaWiki site via the Action API.",
     url: "https://github.com/obbywiki/wikiwire",
-    kind: "CI tooling",
+    kind: "ci_tooling",
     by: "Obby Wiki",
     from_wikux: false,
   },
@@ -48,7 +48,7 @@ export const resources: Resource[] = [
     summary:
       "Browser extension that replaces GitHub file and folder icons with recognizable logos, including MediaWiki-related icons.",
     url: "https://github.com/wlft/browser-extensions-GitHubBetterFileIcons",
-    kind: "Browser extension",
+    kind: "browser_ext",
     by: "wlft",
     from_wikux: false,
   },
@@ -58,7 +58,7 @@ export const resource_sections: {
   kind: ResourceKind;
   title: string;
 }[] = [
-  { kind: "MediaWiki extension", title: "MediaWiki extensions" },
-  { kind: "CI tooling", title: "CI tooling" },
-  { kind: "Browser extension", title: "Browser extensions" },
+  { kind: "mw_ext", title: "MediaWiki extensions" },
+  { kind: "ci_tooling", title: "CI tooling" },
+  { kind: "browser_ext", title: "Browser extensions" },
 ];
