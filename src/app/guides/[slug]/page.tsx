@@ -43,7 +43,7 @@ export default async function GuidePage({ params }: page_props) {
         >
           Guides
         </Link>
-        <span aria-hidden="true"> / </span>
+        <span aria-hidden="true"> a/ </span>
         <span className="text-foreground">{page.frontmatter.title}</span>
       </p>
 

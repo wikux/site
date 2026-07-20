@@ -24,7 +24,7 @@ export function ResourceCard({ resource }: ResourceCardProps) {
       <span className="mt-1 text-sm text-muted">by {resource.by}</span>
       <span className="mt-3 flex-1 text-muted">{resource.summary}</span>
       <span className="mt-4 border border-border px-2 py-0.5 text-xs text-muted w-fit">
-        {resource.kind}
+        {resource.kind == 'mw_ext' && 'MediaWiki extensions' || resource.kind == 'ci_tooling' && 'CI tooling' || resource.kind == 'browser_ext' && 'Browser extensions' || '??'}
       </span>
     </a>
   );
